@@ -8,6 +8,8 @@ import createError from 'http-errors';
 import cookieParser from 'cookie-parser';
 
 import * as configs from '@/config';
+import { errorHandler } from '@/middlewares/errorHandler';
+import { responseHandler } from '@/middlewares/responseHandler';
 
 const app = express();
 
@@ -18,6 +20,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors(configs.corsConfig));
 app.use(compression(configs.compressionConfig));
 app.use(cookieParser());
+
+// Load custom middlewares
+app.use(responseHandler);
 
 // Load router paths
 configs.routerConfig(app);
@@ -30,7 +35,7 @@ app.use((req, res, next) => {
 // error handler
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-  res.status(err.status || 500).json(err);
+  errorHandler(err, req, res, next);
 });
 
 export default app;
