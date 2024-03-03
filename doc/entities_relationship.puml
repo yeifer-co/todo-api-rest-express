@@ -1,0 +1,16 @@
+@startuml
+'Este diagrama explica las entidades, atributos y relaciones de la base de datos para este proyecto'
+
+entity "todo" as todo {
+  * id : int <<generated>>
+  --
+  name : string
+  description : string
+  author : string
+  isComplete : boolean
+  createdAt : date
+  updatedAt : date
+  deletedAt : date
+}
+
+@enduml
