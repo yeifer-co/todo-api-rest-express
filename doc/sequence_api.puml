@@ -1,0 +1,84 @@
+@startuml
+
+header Sequential diagram of the API calls
+footer Page %page% of %lastpage%
+
+participant Front [
+    =Frontend
+    ----
+    ""Backgroud calls""
+]
+participant "Endpoint API"  as api
+database    Database        as db
+
+title Get all tasks
+
+Front -> api: GET /tasks
+activate api
+
+api -> db: SELECT * FROM todo
+activate db
+
+db --> api: [{\n\tid: 1,\n\tname: "Task 1",\n\tdone: false\n},\n{\n\tid: 2, name:\n\t"Task 2",\n\tdone: true\n}]
+deactivate db
+
+api --> Front: [{\n\tid: 1,\n\tname: "Task 1",\n\tdone: false\n},\n{\n\tid: 2, name:\n\t"Task 2",\n\tdone: true\n}]
+deactivate api
+
+newpage Get a task by id
+
+Front -> api: GET /task/1
+activate api
+
+api -> db: SELECT * FROM todo WHERE id = 1
+activate db
+
+db --> api: {\n\tid: 1,\n\tname: "Task 1",\n\tdone: false\n}
+deactivate db
+
+api --> Front: {\n\tid: 1,\n\tname: "Task 1",\n\tdone: false\n}
+deactivate api
+
+newpage Create a task
+
+Front -> api: POST /task
+activate api
+
+api -> db: INSERT INTO todo (name, done) VALUES ("Task 3", false)
+activate db
+
+db --> api: {\n\tid: 3,\n\tname: "Task 3",\n\tdone: false\n}
+deactivate db
+
+api --> Front: {\n\tid: 3,\n\tname: "Task 3",\n\tdone: false\n}
+deactivate api
+
+newpage Update a task
+
+Front -> api: PUT /task/3
+activate api
+
+api -> db: UPDATE todo SET done = true WHERE id = 3
+activate db
+
+db --> api: {\n\tid: 3,\n\tname: "Task 3",\n\tdone: true\n}
+deactivate db
+
+api --> Front: {\n\tid: 3,\n\tname: "Task 3",\n\tdone: true\n}
+deactivate api
+
+newpage Delete a task
+
+Front -> api: DELETE /task/3
+activate api
+
+api -> db: DELETE FROM todo WHERE id = 3
+activate db
+
+db --> api: {\n\tid: 3,\n\tname: "Task 3",\n\tdone: true\n}
+deactivate db
+
+api --> Front: {\n\tid: 3,\n\tname: "Task 3",\n\tdone: true\n}
+deactivate api
+
+@enduml
