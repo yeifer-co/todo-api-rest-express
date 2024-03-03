@@ -104,3 +104,5 @@ function onListening() {
   debug(`Listening on ${bind}`);
   console.log(`Listening on ${bind}`);
 }
+
+export default server;
