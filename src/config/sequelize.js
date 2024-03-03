@@ -26,7 +26,8 @@ export const development = {
 };
 
 export const test = {
-  ...defaultConfig,
+  dialect: 'sqlite',
+  storage: ':memory:',
   logging: false,
 };
 
