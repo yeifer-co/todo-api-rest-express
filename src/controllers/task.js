@@ -7,6 +7,9 @@ import db from '@/database';
 export const allTasks = async (req, res, next) => {
   try {
     const tasks = await db.models.task.findAll();
+    if (tasks.length === 0) {
+      return res.sendResponse({ code: 404, message: "No tasks found" });
+    }
     res.sendResponse({
       data: tasks,
       message: "All tasks are retrieved, be aware of the amount of data retrieved, no pagination is implemented",
