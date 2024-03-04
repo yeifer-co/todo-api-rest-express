@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "description": "Boilerplate for api to Autority challenge",
   "scripts": {
-    "build": "babel src --out-dir dist",
-    "start": "node ./dist/bin/www.js",
+    "build": "NODE_ENV=production babel src --out-dir dist",
+    "start": "NODE_ENV=production node ./dist/bin/www.js",
     "dev": "nodemon --ignore dist/ --ignore test/ --exec babel-node ./src/bin/www.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
